@@ -1,6 +1,8 @@
 <script setup>
   import { RouterLink, RouterView } from 'vue-router'
-  import { ref, onMounted } from 'vue'
+  import { ref, onMounted, onUnmounted } from 'vue'
+  import Modale from './components/Modale.vue';
+  import Header from './components/Header.vue';
 
   function displayLastUpdateTime() {
     const x = document.lastModified;
@@ -42,6 +44,8 @@
 
   const currentSection = ref('');
 
+  let app;
+
   onMounted(() => {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
@@ -53,7 +57,63 @@
     document.querySelectorAll('section h1').forEach((section) => {
       observer.observe(section);
     })
+
+    app = document.getElementById('app');
+    document.addEventListener('scroll', handleScroll);
   });
+
+  onUnmounted(() => {
+    document.removeEventListener('scroll', handleScroll);
+  });
+
+  function handleScroll() {
+    const nextSection = document.getElementById('section1');
+    const nextSectionRect = nextSection.getBoundingClientRect();
+    const currentScrollY = window.scrollY;
+    const nextSectionScrollY = nextSectionRect.top + window.scrollY;
+
+    const distanceToNextSection = nextSectionScrollY - currentScrollY;
+
+    let fadeFactor = Math.max((distanceToNextSection / window.innerHeight), 0);
+
+    const startColor = { r: 0, g: 128, b: 255 };
+    const endColor = { r: 0, g: 0, b: 0 };
+
+    const interpolatedColor = {
+      r: Math.round(startColor.r + fadeFactor * (endColor.r - startColor.r)),
+      g: Math.round(startColor.g + fadeFactor * (endColor.g - startColor.g)),
+      b: Math.round(startColor.b + fadeFactor * (endColor.b - startColor.b)),
+    };
+
+    app.style.backgroundColor = `rgb(${interpolatedColor.r}, ${interpolatedColor.g}, ${interpolatedColor.b})`;
+  };
+
+  const y = ref(0);
+  function onScroll(){
+    x.value = window.scrollY;
+  }
+
+</script>
+
+
+<script>
+  export default {
+    name: 'App',
+    data() {
+      return {
+        revele: false
+      }
+    },
+    components: {
+      'modale': Modale,
+      'header': Header,
+    },
+    methods: {
+      toggleModale: function() {
+        this.revele = !this.revele;
+      }
+    }
+  }
 </script>
 
 <template>
@@ -65,7 +125,7 @@
 -->
 
   <header>
-    <button @click="scrollToTop">
+    <button class="menu-button" @click="scrollToTop">
       <img src="./assets/atom.png" alt="atom image">
     </button>
     <nav>
@@ -74,7 +134,8 @@
   </header>
 
   <main>
-        <section class="fade-scroll"></section>
+    <modale v-bind:revele="revele" v-bind:toggleModale="toggleModale"></modale>
+    <button v-on:click="toggleModale">Ouvre la modale</button>
         <section v-for="(header, index) in headers" :key="header" :id="`section${index}`">
           <h1 :id="index">{{ header }}</h1>
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla iaculis ultricies turpis, ut maximus urna cursus quis. Donec vel auctor ex, eu vehicula felis. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed in leo a augue commodo vestibulum eget in elit. Donec commodo ultrices enim a imperdiet. Integer et fringilla justo. Morbi fermentum tellus at odio consectetur sagittis. Phasellus vehicula a urna eget euismod. Nam et nibh vitae est pulvinar ultricies. Phasellus feugiat magna eleifend enim bibendum, vel mattis nisi cursus. Nam vel nisl quam.
@@ -134,7 +195,7 @@ Proin a urna in justo dignissim maximus. Quisque ornare dui lacus, fringilla con
 </template>
 
 <style scoped>
-  button{
+  .menu-button{
     background-color: white;
     border-width: 0;
     margin-left: 10%;
@@ -204,20 +265,16 @@ Proin a urna in justo dignissim maximus. Quisque ornare dui lacus, fringilla con
     height: auto;
   }
 
-  .row{
-    display: flex;
-    width: 100%;
-    height: auto;
-    justify-content: center;
-    align-items: center;
-  }
-
   time{
     text-align: center;
   }
 
   h1{
     scroll-margin-top: 15vh;
+    color: black;
   }
 
+  p{
+    color: black;
+  }
 </style>

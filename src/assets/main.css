@@ -9,14 +9,13 @@
   flex-direction: column;
   min-height: 100vh;
   min-width: 100%;
-  background-color: grey;
-  opacity: 0.8;
+  background-color: white;
+  transition: background-color 0.5s linear;
 }
 
 body {
   display: flex;
   place-items: center;
-  box-sizing: border-box;
 }
 
 footer{
@@ -38,13 +37,12 @@ header{
   padding-bottom: 0.5em;
   height: 10vh;
   border-bottom: 0.1em solid black;
-  background-color: black;
+  backdrop-filter: blur(0.2em);
 }
 
 main{
   display: flex;
   flex-direction: column;
   height: 100%;
-  padding: 1em;
   margin-top: 10vh;
 }
