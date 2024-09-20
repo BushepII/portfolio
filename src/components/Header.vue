@@ -48,6 +48,10 @@
         font-size: 2em;
     }
 
+    nav a:hover {
+        opacity: 0.6;
+    }
+
     nav a::after{
         content: '';
         position: absolute;

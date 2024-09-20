@@ -13,22 +13,11 @@
         },
         methods: {
             displayLastUpdateTime: function () {
-                const x = document.lastModified;
-                this.lastUpdateTime = x;
-                this.lastUpdateDateTime = new Date(x).toISOString();
+                this.lastUpdateTime = document.lastModified;
+                this.lastUpdateDateTime = new Date(this.lastUpdateTime).toISOString();
             }
         }
     };
-
-    let lastUpdateTime;
-    let lastUpdateDateTime;
-
-    function displayLastUpdateTime() {
-        lastUpdateTime = document.lastModified;
-        lastUpdateDatetime = new Date(x).toISOString();
-    }
-
-  document.addEventListener("DOMContentLoaded", displayLastUpdateTime);
 </script>
 
 <template>
@@ -46,10 +35,13 @@
 <style scoped>
     time{
         text-align: center;
+        color: white;
+        font-size: 2em;
     }
 
     img {
-        width: 5em;
+        height: 15vh;
+        width: auto;
     }
     img:hover{
         opacity: 0.2;
