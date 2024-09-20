@@ -49,7 +49,9 @@
         color: #333;
         padding: 2em;
         position: fixed;
-        top: 50vh;
+        top: 20%;
+        width: 60%;
+        height: 60%;
     }
 
     .btn-modale {
