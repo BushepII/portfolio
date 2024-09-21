@@ -68,12 +68,16 @@
         headers: ['Présentation', 'Créations', 'Contact'],
         active: false,
         imageSrc: [cvImage, chargeImage, commentImage],
+        name: "",
+        subject: "",
+        message: "",
       }
     },
     components: {
       'modale': Modale,
       'appHeader': Header,
-      'appFooter': Footer
+      'appFooter': Footer,
+      'contactform': ContactForm,
     },
     methods: {
       toggleModale1: function() {
@@ -106,6 +110,7 @@
           });
         }
       },
+
     },
   };
 

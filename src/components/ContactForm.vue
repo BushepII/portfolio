@@ -1,9 +1,44 @@
-<script setup>
-
+<script>
+    import emailjs from '@emailjs/browser';
+    import * as VueSpinnerCss from "vue-spinners-css";
+    export default {
+        name: 'ContactUs',
+        data() {
+            return {
+                firstName: '',
+                name: '',
+                subject: '',
+                message: '',
+                loading: false,
+                messageSent: false,
+                messageNotSent: false,
+            }
+        },
+        methods: {
+            sendEmail() {
+                this.loading = true;
+                emailjs.sendForm(import.meta.env.VITE_SERVICE_ID, import.meta.env.VITE_TEMPLATE_ID, this.$refs.form, {
+                    publicKey: import.meta.env.VITE_USER_KEY,
+                })
+                .then(
+                () => {
+                    console.log('SUCCESS!');
+                    this.loading = false;
+                    this.messageSent = true;
+                },
+                (error) => {
+                    console.log('FAILED...', error);
+                    this.loading = false;
+                    this.messageNotSent = true;
+                },
+                );
+            },
+        },
+    };
 </script>
 
 <template>
-    <form action="">
+    <form ref="form" action="" @submit.prevent="sendEmail">
         <section class="names">
             <label for="firstName">Prénom: </label>
             <input type="text" id="firstName" name="firstName" placeholder="Prénom" required>
@@ -14,15 +49,22 @@
 
         <section class="object">
             <label for="object">Objet: </label>
-            <input type="text" id="object" name="object" placeholder="Objet" required>
+            <input type="text" id="subject" name="subject" placeholder="Subject" required>
         </section>
 
         <section class="message">
             <label for="message">Message: </label>
-            <textarea ref="textarea" id="object" name="object" placeholder="Message" required></textarea>
+            <textarea ref="textarea" id="message" name="message" placeholder="Message" required></textarea>
         </section>
 
-        <button type="submit" id="contact-button">Envoyer</button>
+        <section class="send-message">
+            <button type="submit" id="contact-button" value="Send">
+                    Envoyer
+            </button>
+            <p v-if="loading">Sending message...</p>
+            <p v-else-if="messageSent">Message sent !</p>
+            <p v-else-if="messageNotSent">Message not sent, try again later !</p>
+        </section>
     </form>
 </template>
 
@@ -84,5 +126,17 @@
     #contact-button:hover {
         cursor: pointer;
         opacity: 0.6;
+    }
+
+    .send-message {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .send-message p {
+        font-size: 2em;
+        color: white;
+        padding-left: 2em;
     }
 </style>
