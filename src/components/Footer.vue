@@ -43,6 +43,7 @@
         height: 15vh;
         width: auto;
     }
+    
     img:hover{
         opacity: 0.2;
     }
