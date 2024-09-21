@@ -25,6 +25,7 @@
                     console.log('SUCCESS!');
                     this.loading = false;
                     this.messageSent = true;
+                    this.$refs.form.reset();
                 },
                 (error) => {
                     console.log('FAILED...', error);
@@ -49,7 +50,7 @@
 
         <section class="object">
             <label for="object">Objet: </label>
-            <input type="text" id="subject" name="subject" placeholder="Subject" required>
+            <input type="text" id="subject" name="subject" placeholder="Objet" required>
         </section>
 
         <section class="message">
