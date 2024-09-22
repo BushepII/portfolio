@@ -16,6 +16,7 @@
   let main;
   let animationPaused = ref(false);
   let creations = [];
+  let modalButtons = [];
 
   const radius = 200;
   let angle = 0;
@@ -47,6 +48,12 @@
       document.getElementById('creation-section3')
     ]
 
+    modalButtons = [
+      document.getElementById('modalButton1'),
+      document.getElementById('modalButton2'),
+      document.getElementById('modalButton3')
+    ]
+
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
@@ -63,14 +70,14 @@
 
     animate();
 
-    creations.forEach((creation) => {
-      creation.addEventListener('mouseenter', () => {
+    modalButtons.forEach((modalButton) => {
+      modalButton.addEventListener('mouseenter', () => {
         animationPaused.value = true;
       });
     });
 
-    creations.forEach((creation) => {
-      creation.addEventListener('mouseleave', () => {
+    modalButtons.forEach((modalButton) => {
+      modalButton.addEventListener('mouseleave', () => {
         animationPaused.value = false;
       });
     });
@@ -137,7 +144,7 @@
       <section v-if="index === 1" class="section-content creations" :id="index">
         <section id="creation-section1">
           <h2 class="title-creation">Mon premier CV</h2>
-          <button v-on:click="toggleModale1">
+          <button v-on:click="toggleModale1" id="modalButton1">
             <img src="@/assets/cv.png" alt="">
           </button>
         </section>
@@ -150,7 +157,7 @@
         
         <section id="creation-section2">
           <h2 class="title-creation">Mon premier Cahier des Charges</h2>
-          <button v-on:click="toggleModale2">
+          <button v-on:click="toggleModale2" id="modalButton2">
             <img src="@/assets/cahier_charge.png" alt="">
           </button>
         </section>
@@ -163,7 +170,7 @@
 
         <section id="creation-section3">
           <h2 class="title-creation">Espace de commentaires dynamique</h2>
-          <button v-on:click="toggleModale3">
+          <button v-on:click="toggleModale3" id="modalButton3">
             <img src="@/assets/comment_space.png">
           </button>
         </section>
