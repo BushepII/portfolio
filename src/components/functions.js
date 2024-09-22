@@ -32,4 +32,4 @@ export function handleScroll() {
     const main = document.getElementsByTagName("main")[0];
 
     main.style.backgroundImage = `linear-gradient(rgba(0, 14, 40, ${Math.min(1-fadeFactor, 0.5)}),rgba(0, 14, 40, ${Math.min(1-fadeFactor, 0.5)})), url(${background})`;
-  };
+};

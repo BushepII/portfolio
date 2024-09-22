@@ -43,13 +43,13 @@
       document.getElementById('creation-section1'),
       document.getElementById('creation-section2'),
       document.getElementById('creation-section3')
-    ]
+    ];
 
     modalButtons = [
       document.getElementById('modalButton1'),
       document.getElementById('modalButton2'),
       document.getElementById('modalButton3')
-    ]
+    ];
 
     //Assign an observer to check in which section the user is looking at
     const observer = new IntersectionObserver((entries) => {
@@ -133,6 +133,7 @@
 
   <main>
     <section v-for="(header, index) in headers" :key="header" :id="`section${index}`">
+      
       <section v-if="index === 0" :id="index" class="section-content presentation">
           <h1>Développeur Web</h1>
           <p>Je suis John Doe, développeur Web dans l'entreprise Webatom. Bien que peu expérimenté, je me forme aux nouvelles technologies du Web.</p>
@@ -148,7 +149,7 @@
         </section>
         <modale v-bind:revele="revele1" v-bind:toggleModale="toggleModale1" v-bind:imageSrc="imageSrc[0]">
           <h2 class="modal-title">Mon premier CV</h2>
-          <time datetime="20/09/2024" class="modal-time">Date: 20/09/2024</time>
+          <time datetime="20/09/2024" class="modal-time">Date: 06/06/2024</time>
           <p class="modal-tech">Technologies : HTML5, CSS3</p>
           <a href="https://github.com/BushepII/cv.git" target="_blank" class="modal-link">Lien vers le document</a>
         </modale>
@@ -161,7 +162,7 @@
         </section>
         <modale v-bind:revele="revele2" v-bind:toggleModale="toggleModale2" v-bind:imageSrc="imageSrc[1]">
           <h2 class="modal-title">Mon premier Cahier des Charges</h2>
-          <time datetime="20/09/2024" class="modal-time">Date: 20/09/2024</time>
+          <time datetime="20/09/2024" class="modal-time">Date: 17/09/2024</time>
           <p class="modal-tech">Technologies : LaTeX</p>
           <a href="https://github.com/BushepII/cahier_charges.git" target="_blank" class="modal-link">Lien vers le document</a>
         </modale>
@@ -174,7 +175,7 @@
         </section>
         <modale v-bind:revele="revele3" v-bind:toggleModale="toggleModale3" v-bind:imageSrc="imageSrc[2]" :videoSrc="commentVideo" :videoType="videoType">
           <h2 class="modal-title">Espace de commentaires dynamique</h2>
-          <time datetime="20/09/2024" class="modal-time">Date: 20/09/2024</time>
+          <time datetime="20/09/2024" class="modal-time">Date: 17/09/2024</time>
           <p class="modal-tech">Technologies : HTML5, CSS3, JavaScript ES2023</p>
           <a href="https://github.com/BushepII/comment_space.git" target="_blank" class="modal-link">Lien vers le document</a>
         </modale>
@@ -182,7 +183,6 @@
 
       <section v-if="index === 2" class="section-content contact" :id="index">
         <h1>{{ header }}</h1>
-
         <ContactForm />
       </section>
 

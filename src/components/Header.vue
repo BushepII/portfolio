@@ -1,5 +1,4 @@
 <script>
-import { scrollToSection } from './functions';
 
     export default {
         name: 'Header',
