@@ -1,16 +1,12 @@
 @import './base.css';
 
 #app {
-  /*max-width: 1280px;*/
   margin: 0 auto;
-  /*padding: 2rem;*/
   font-weight: normal;
   display: flex;
   flex-direction: column;
   min-height: 100%;
   width: 100%;
-  background: rgb(0,0,0);
-  transition: background-color 0.5s linear;
   box-sizing: border-box;
 }
 
@@ -20,6 +16,7 @@ body {
   min-width: 100%;
   margin: 0 auto;
   position: absolute;
+  color: white;
 }
 
 footer{
@@ -28,7 +25,9 @@ footer{
   justify-content: center;
   align-items: center;
   min-width: 100%;
-  background-color: rgb(121, 35, 9);
+  min-height: 20vh;
+  background: linear-gradient(rgba(0, 14, 40, 1), rgba(1, 128, 214, 1));
+  backdrop-filter: blur(1em);
 }
 
 header{
@@ -42,11 +41,29 @@ header{
   padding-bottom: 0.5em;
   min-height: 10%;
   border-bottom: 0.1em solid black;
+  background: linear-gradient(rgba(0, 14, 40, 0.6), rgba(1, 128, 214, 0.6));
   backdrop-filter: blur(0.2em);
+  z-index: 10;
 }
 
 main{
   display: flex;
   flex-direction: column;
   height: 100%;
+  background: linear-gradient(rgba(0, 14, 40, 0),rgba(0, 14, 40, 0)), url('@/assets/atom-background.jpg');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: 100%;
+  background-position: center top;
+}
+
+h1 {
+  color: white;
+  font-size: 8em;
+  text-align: center;
+  padding-bottom: 1em;
+}
+
+p {
+  font-size: 3em;
 }

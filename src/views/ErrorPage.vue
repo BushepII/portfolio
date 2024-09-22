@@ -2,7 +2,7 @@
   import Header from '@/components/Header.vue';
   import Footer from '@/components/Footer.vue';
 
-  import { scrollToTop} from '@/components/functions';
+  import { scrollToTop } from '@/components/functions';
 
 </script>
 
@@ -10,7 +10,7 @@
   <Header :scrollToTop="scrollToTop"/>
 
   <main>
-    <img src="@/assets/errorpicture.png" alt="">
+    <img src="@/assets/errorpicture.png" alt="Image d'un atome avec un robot à côté">
     <h1>404</h1>
     <router-link to="/" class="router">Retour à la page d'accueil</router-link>
   </main>
@@ -20,13 +20,7 @@
 
 
 <style scoped>
-
-  Header {
-    background-color: rgb(121, 35, 9);
-  }
-
   main {
-    background-color: rgb(121, 35, 9);
     color: white;
     padding-top: 5%;
   }
@@ -38,6 +32,7 @@
 
   h1 {
     font-size: 10em;
+    text-align: start;
   }
 
   .router{

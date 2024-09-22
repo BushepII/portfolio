@@ -1,6 +1,6 @@
 <script>
-    import emailjs from '@emailjs/browser';
-    import * as VueSpinnerCss from "vue-spinners-css";
+    import emailjs from '@emailjs/browser'; //email-com.js is deprecated
+
     export default {
         name: 'ContactUs',
         data() {
@@ -25,7 +25,7 @@
                     console.log('SUCCESS!');
                     this.loading = false;
                     this.messageSent = true;
-                    this.$refs.form.reset();
+                    this.$refs.form.reset(); //Reset the input fields
                 },
                 (error) => {
                     console.log('FAILED...', error);
@@ -62,9 +62,9 @@
             <button type="submit" id="contact-button" value="Send">
                     Envoyer
             </button>
-            <p v-if="loading">Sending message...</p>
-            <p v-else-if="messageSent">Message sent !</p>
-            <p v-else-if="messageNotSent">Message not sent, try again later !</p>
+            <p v-if="loading">Envoie du message...</p>
+            <p v-else-if="messageSent">Message envoyé !</p>
+            <p v-else-if="messageNotSent">Message non envoyé, essayer plus tard !</p>
         </section>
     </form>
 </template>

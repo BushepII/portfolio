@@ -1,16 +1,25 @@
 <script>
+import { scrollToSection } from './functions';
+
     export default {
         name: 'Header',
-        props: ['headers', 'active', 'scrollToTop', 'scrollToSection', 'currentSection'],
+        props: {
+            headers: Array,
+            scrollToTop: Function,
+            scrollToSection: Function,
+            active: Boolean,
+            currentSection: String,
+        },
     };
 </script>
 
 <template>
     <header>
         <button class="menu-button" v-on:click="scrollToTop">
-            <img src="../assets/atom.png" alt="atom image">
+            <img src="../assets/atom.png" alt="Atome de couleur noir sur fond blanc">
         </button>
         <nav>
+            <!-- Create the corresponding titles and scroll to clickable section -->
             <a v-for="(header, index) in headers" :key="header" :href="`#${index}`" :class="{ active: index == currentSection}" @click.prevent="scrollToSection(`section${index}`)">{{ header }}</a>
         </nav>
     </header>

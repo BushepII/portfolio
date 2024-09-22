@@ -1,5 +1,4 @@
 <script setup>
-  import { RouterLink, RouterView } from 'vue-router'
   import { ref, onMounted, onUnmounted } from 'vue'
   import Modale from '@/components/Modale.vue';
   import Header from '@/components/Header.vue';
@@ -8,14 +7,51 @@
   import cvImage from '@/assets/cv.png';
   import chargeImage from '@/assets/cahier_charge.png';
   import commentImage from '@/assets/comment_space.png';
-
-  import { scrollToTop, handleScroll, scrollToSection } from '@/components/functions';
+  import commentVideo from '@/assets/comment_space.mp4';
+  import { scrollToTop, handleScroll, scrollToSection } from '@/components/functions.js';
 
   const currentSection = ref('');
 
-  let app;
+  let animationPaused = ref(false);
+  let creations = [];
+  let modalButtons = [];
+
+  let angle = 0;
+
+  //Animate the modal pictures
+  function animate() {
+    if (!animationPaused.value) {
+      angle += 0.005;
+    }
+    
+    creations.forEach((creation, index) => {
+      const sectionAngle = angle + (index * (2 * Math.PI / creations.length)); // Distribute sections evenly around the circle
+
+      const xPercent = 50 + 20 * Math.cos(sectionAngle); // 50 is half the section width
+      const yPercent = 50 + 20 * Math.sin(sectionAngle); // 50 is half the section height
+
+      creation.style.left = `${xPercent}%`;
+      creation.style.top = `${yPercent}%`;
+    });
+
+    // Loop the animation
+    requestAnimationFrame(animate);
+  }
 
   onMounted(() => {
+    creations = [
+      document.getElementById('creation-section1'),
+      document.getElementById('creation-section2'),
+      document.getElementById('creation-section3')
+    ]
+
+    modalButtons = [
+      document.getElementById('modalButton1'),
+      document.getElementById('modalButton2'),
+      document.getElementById('modalButton3')
+    ]
+
+    //Assign an observer to check in which section the user is looking at
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
@@ -27,8 +63,22 @@
       observer.observe(section);
     })
 
-    app = document.getElementById('app');
+    //Changing background according to scroll
     document.addEventListener('scroll', handleScroll);
+
+    animate();
+
+    modalButtons.forEach((modalButton) => {
+      modalButton.addEventListener('mouseenter', () => {
+        animationPaused.value = true;
+      });
+    });
+
+    modalButtons.forEach((modalButton) => {
+      modalButton.addEventListener('mouseleave', () => {
+        animationPaused.value = false;
+      });
+    });
   });
 
   onUnmounted(() => {
@@ -48,6 +98,8 @@
         headers: ['Présentation', 'Créations', 'Contact'],
         active: false,
         imageSrc: [cvImage, chargeImage, commentImage],
+        videoSrc: commentVideo,
+        videoType: "video/mp4",
         name: "",
         subject: "",
         message: "",
@@ -77,195 +129,152 @@
 </script>
 
 <template>
-
   <Header :headers="headers" :scrollToTop="scrollToTop" :scrollToSection="scrollToSection" :active="active" :currentSection="currentSection"/>
 
   <main>
     <section v-for="(header, index) in headers" :key="header" :id="`section${index}`">
-      <div v-if="index === 0" :id="index" class="section-content">
-        <div class="presentation">
+      <section v-if="index === 0" :id="index" class="section-content presentation">
           <h1>Développeur Web</h1>
-          <p>Je suis Machin Chose, développeur Web dans l'entreprise Webatom. Bien que peu expérimenté, je me forme aux nouvelles technologies du Web.</p>
-        </div>
-        <img src="@/assets/atom.png" alt="atom image" class="presentation-image">
-      </div>
+          <p>Je suis John Doe, développeur Web dans l'entreprise Webatom. Bien que peu expérimenté, je me forme aux nouvelles technologies du Web.</p>
+      </section>
 
-      <div v-if="index === 1" class="creations section-content" :id="index">
-        <h1>{{ header }}</h1>
-        <section class="creation-section">
+      <h1 v-if="index === 1">{{ header }}</h1>
+      <section v-if="index === 1" class="section-content creations" :id="index">
+        <section id="creation-section1">
           <h2 class="title-creation">Mon premier CV</h2>
-          <modale v-bind:revele="revele1" v-bind:toggleModale="toggleModale1" v-bind:imageSrc="imageSrc[0]">
+          <button v-on:click="toggleModale1" id="modalButton1">
+            <img src="@/assets/cv.png" alt="Affichage du CV comme premier projet">
+          </button>
+        </section>
+        <modale v-bind:revele="revele1" v-bind:toggleModale="toggleModale1" v-bind:imageSrc="imageSrc[0]">
           <h2 class="modal-title">Mon premier CV</h2>
           <time datetime="20/09/2024" class="modal-time">Date: 20/09/2024</time>
           <p class="modal-tech">Technologies : HTML5, CSS3</p>
           <a href="https://github.com/BushepII/cv.git" target="_blank" class="modal-link">Lien vers le document</a>
-          </modale>
-          <button v-on:click="toggleModale1"><img src="@/assets/cv.png" alt=""></button>
-        </section>
+        </modale>
         
-        <section class="creation-section">
+        <section id="creation-section2">
           <h2 class="title-creation">Mon premier Cahier des Charges</h2>
-          <modale v-bind:revele="revele2" v-bind:toggleModale="toggleModale2" v-bind:imageSrc="imageSrc[1]">
+          <button v-on:click="toggleModale2" id="modalButton2">
+            <img src="@/assets/cahier_charge.png" alt="Affichage du cahier des charges comme premier projet">
+          </button>
+        </section>
+        <modale v-bind:revele="revele2" v-bind:toggleModale="toggleModale2" v-bind:imageSrc="imageSrc[1]">
           <h2 class="modal-title">Mon premier Cahier des Charges</h2>
           <time datetime="20/09/2024" class="modal-time">Date: 20/09/2024</time>
           <p class="modal-tech">Technologies : LaTeX</p>
-          <a href="" target="_blank" class="modal-link">Lien vers le document</a>
-          </modale>
-          <button v-on:click="toggleModale2"><img src="@/assets/cahier_charge.png" alt=""></button>
-        </section>
+          <a href="https://github.com/BushepII/cahier_charges.git" target="_blank" class="modal-link">Lien vers le document</a>
+        </modale>
 
-        <section class="creation-section">
+        <section id="creation-section3">
           <h2 class="title-creation">Espace de commentaires dynamique</h2>
-          <modale v-bind:revele="revele3" v-bind:toggleModale="toggleModale3" v-bind:imageSrc="imageSrc[2]">
+          <button v-on:click="toggleModale3" id="modalButton3">
+            <img src="@/assets/comment_space.png" alt="Affichage du troisieme projet, à savoir un espace d eocmmentaire dynamique">
+          </button>
+        </section>
+        <modale v-bind:revele="revele3" v-bind:toggleModale="toggleModale3" v-bind:imageSrc="imageSrc[2]" :videoSrc="commentVideo" :videoType="videoType">
           <h2 class="modal-title">Espace de commentaires dynamique</h2>
           <time datetime="20/09/2024" class="modal-time">Date: 20/09/2024</time>
-          <p class="modal-tech">Technologies : HTML5, CSS3, JavaScript</p>
-          <a href="" target="_blank" class="modal-link">Lien vers le document</a>
-          </modale>
-          <button v-on:click="toggleModale3"><img src="@/assets/comment_space.png" alt=""></button>
-        </section>
-      </div>
+          <p class="modal-tech">Technologies : HTML5, CSS3, JavaScript ES2023</p>
+          <a href="https://github.com/BushepII/comment_space.git" target="_blank" class="modal-link">Lien vers le document</a>
+        </modale>
+      </section>
 
-      <div v-if="index === 2" class="contact section-content" :id="index">
+      <section v-if="index === 2" class="section-content contact" :id="index">
         <h1>{{ header }}</h1>
 
         <ContactForm />
-      </div>
+      </section>
 
     </section>
-    
   </main> 
 
   <Footer />
 </template>
 
 <style scoped>
-  main section{
+  #section0{
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-right: 20%;
+    padding-left: 20%;
+  }
+
+  #section1 {
     margin-top: 10%;
     margin-bottom: 10%;
-  }
-
-  main section div {
-    padding-bottom: 20vh;
-  }
-
-  .presentation p {
-    color: white;
-    font-size: 2em;
-  }
-
-  h1{
-    scroll-margin-top: 20vh;
-    color: white;
-    font-size: 6em;
-    padding-bottom: 0.5em;
-  }
-
-  .title-creation{
-    color: white;
-    font-size: 4em;
-    width: 60%;
-    margin-right: 1em;
-  }
-
-  #section0 {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .presentation-image {
-    background-color: aliceblue;
-    width: auto;
-    height: 30em;
-    border-radius: 10%;
-    padding: 1em;
-  }
-
-  div {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .presentation {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 60%;
-    margin-right: 2em;
-  }
-
-  .creations {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    position: relative;
     width: 100%;
-  }
-
-  .creation-section {
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-  }
-
-  .contact {
-    display: flex;
-    flex-direction: column;
-    justify-content: start;
-    align-items: center;
-    width: 100%;
+    height: 150vh;
   }
 
   #section2 {
-    margin-top: 0;
-    margin-bottom: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 5%;
   }
 
-  
+  #creation-section1 {
+    position: absolute;
+    width: 10%;
+    height: 10%;
+    transform: translate(-50%, -50%);
+  }
+
+  #creation-section2 {
+    position: absolute;
+    width: 10%;
+    height: 10%;
+    transform: translate(-50%, -50%);
+  }
+
+  #creation-section3 {
+    position: absolute;
+    width: 10%;
+    height: 10%;
+    transform: translate(-50%, -50%);
+  }
+
+  button {
+    padding: 0;
+    width: 100%;
+    height: auto;
+  }
+
+  img {
+    width: 100%;
+    height: 100%;
+  }
+
   button:hover {
     cursor: pointer;
     box-shadow: 1em 1em 1em black;
+    transform: scale(1.1);
   }
 
-  button img {
-    width: 20em;
-  }
-
-  .section-content {
-    min-height: 100vh;
+  h2 {
+    font-size: 3em;
   }
 
   .modal-title {
-    padding-top: 0.5em;
-    padding-bottom: 0.5em;
     font-size: 6em;
   }
 
   .modal-time {
-    padding-top: 0.5em;
-    padding-bottom: 0.5em;
-    font-size: 2em;
+    font-size: 4em;
   }
 
   .modal-tech {
-    padding-top: 0.5em;
-    padding-bottom: 0.5em;
-    font-size: 2em;
+    font-size: 4em;
   }
 
   .modal-link {
-    padding-top: 0.5em;
-    padding-bottom: 0.5em;
-    font-size: 2em;
-    color: black;
-    text-decoration: none;
-  }
-
-  .modal-link:hover {
-    cursor: pointer;
-    text-decoration: underline;
+    font-size: 3em;
   }
 </style>
