@@ -19,8 +19,8 @@
                     <video v-if="videoSrc" :src="videoSrc" :type="videoType" class="modal-video" autoplay loop muted playinline></video>
                     <img v-else-if="imageSrc" :src="imageSrc" class="modal-image">
                 </div>
-
             </div>
+            
         </div>
     </transition>
 </template>
