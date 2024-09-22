@@ -19,6 +19,7 @@ export function scrollToSection(id){
     }
 }
 
+//Fading background when scrolling
 export function handleScroll() {
     const nextSection = document.getElementById('section1');
     const nextSectionRect = nextSection.getBoundingClientRect();

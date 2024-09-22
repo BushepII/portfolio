@@ -23,8 +23,8 @@
 <template>
     <footer>
         <section>
-            <a href="https://github.com/BushepII" target="_blank"><img src="../assets/github_icon.png" alt="github icon"></a>
-            <a href="https://fr.linkedin.com/" target="_blank"><img src="../assets/linkedin_icon.png" alt="linkedin icon"></a>
+            <a href="https://github.com/BushepII" target="_blank"><img src="../assets/github_icon.png" alt="Icone de GitHub"></a>
+            <a href="https://fr.linkedin.com/" target="_blank"><img src="../assets/linkedin_icon.png" alt="Icode de Linkedin"></a>
         </section>
         <time v-if="lastUpdateTime" :datetime="lastUpdateDateTime">
             Last Update time: {{ lastUpdateTime }}

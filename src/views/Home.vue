@@ -8,23 +8,20 @@
   import chargeImage from '@/assets/cahier_charge.png';
   import commentImage from '@/assets/comment_space.png';
   import commentVideo from '@/assets/comment_space.mp4';
-
   import { scrollToTop, handleScroll, scrollToSection } from '@/components/functions.js';
 
   const currentSection = ref('');
 
-  let main;
   let animationPaused = ref(false);
   let creations = [];
   let modalButtons = [];
 
-  const radius = 200;
   let angle = 0;
 
+  //Animate the modal pictures
   function animate() {
     if (!animationPaused.value) {
-      // Increment the angle to move the image along the circle
-      angle += 0.005; // Adjust this value for speed
+      angle += 0.005;
     }
     
     creations.forEach((creation, index) => {
@@ -54,6 +51,7 @@
       document.getElementById('modalButton3')
     ]
 
+    //Assign an observer to check in which section the user is looking at
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
@@ -65,7 +63,7 @@
       observer.observe(section);
     })
 
-    main = document.getElementsByTagName('main');
+    //Changing background according to scroll
     document.addEventListener('scroll', handleScroll);
 
     animate();
@@ -137,7 +135,7 @@
     <section v-for="(header, index) in headers" :key="header" :id="`section${index}`">
       <section v-if="index === 0" :id="index" class="section-content presentation">
           <h1>Développeur Web</h1>
-          <p>Je suis Machin Chose, développeur Web dans l'entreprise Webatom. Bien que peu expérimenté, je me forme aux nouvelles technologies du Web.</p>
+          <p>Je suis John Doe, développeur Web dans l'entreprise Webatom. Bien que peu expérimenté, je me forme aux nouvelles technologies du Web.</p>
       </section>
 
       <h1 v-if="index === 1">{{ header }}</h1>
@@ -145,7 +143,7 @@
         <section id="creation-section1">
           <h2 class="title-creation">Mon premier CV</h2>
           <button v-on:click="toggleModale1" id="modalButton1">
-            <img src="@/assets/cv.png" alt="">
+            <img src="@/assets/cv.png" alt="Affichage du CV comme premier projet">
           </button>
         </section>
         <modale v-bind:revele="revele1" v-bind:toggleModale="toggleModale1" v-bind:imageSrc="imageSrc[0]">
@@ -158,27 +156,27 @@
         <section id="creation-section2">
           <h2 class="title-creation">Mon premier Cahier des Charges</h2>
           <button v-on:click="toggleModale2" id="modalButton2">
-            <img src="@/assets/cahier_charge.png" alt="">
+            <img src="@/assets/cahier_charge.png" alt="Affichage du cahier des charges comme premier projet">
           </button>
         </section>
         <modale v-bind:revele="revele2" v-bind:toggleModale="toggleModale2" v-bind:imageSrc="imageSrc[1]">
           <h2 class="modal-title">Mon premier Cahier des Charges</h2>
           <time datetime="20/09/2024" class="modal-time">Date: 20/09/2024</time>
           <p class="modal-tech">Technologies : LaTeX</p>
-          <a href="" target="_blank" class="modal-link">Lien vers le document</a>
+          <a href="https://github.com/BushepII/cahier_charges.git" target="_blank" class="modal-link">Lien vers le document</a>
         </modale>
 
         <section id="creation-section3">
           <h2 class="title-creation">Espace de commentaires dynamique</h2>
           <button v-on:click="toggleModale3" id="modalButton3">
-            <img src="@/assets/comment_space.png">
+            <img src="@/assets/comment_space.png" alt="Affichage du troisieme projet, à savoir un espace d eocmmentaire dynamique">
           </button>
         </section>
         <modale v-bind:revele="revele3" v-bind:toggleModale="toggleModale3" v-bind:imageSrc="imageSrc[2]" :videoSrc="commentVideo" :videoType="videoType">
           <h2 class="modal-title">Espace de commentaires dynamique</h2>
           <time datetime="20/09/2024" class="modal-time">Date: 20/09/2024</time>
           <p class="modal-tech">Technologies : HTML5, CSS3, JavaScript ES2023</p>
-          <a href="" target="_blank" class="modal-link">Lien vers le document</a>
+          <a href="https://github.com/BushepII/comment_space.git" target="_blank" class="modal-link">Lien vers le document</a>
         </modale>
       </section>
 
