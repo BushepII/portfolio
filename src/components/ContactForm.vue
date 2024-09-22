@@ -62,9 +62,9 @@
             <button type="submit" id="contact-button" value="Send">
                     Envoyer
             </button>
-            <p v-if="loading">Envoie du message...</p>
+            <p v-if="loading">Envoi du message...</p>
             <p v-else-if="messageSent">Message envoyé !</p>
-            <p v-else-if="messageNotSent">Message non envoyé, essayer plus tard !</p>
+            <p v-else-if="messageNotSent">Message non envoyé, essayez plus tard !</p>
         </section>
     </form>
 </template>
