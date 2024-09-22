@@ -1,3 +1,5 @@
+import background from '@/assets/atom-background.jpg'
+
 export function scrollToTop() {
     const x = window.scrollX;
     window.scrollTo({
@@ -25,16 +27,8 @@ export function handleScroll() {
 
     const distanceToNextSection = nextSectionScrollY - currentScrollY;
 
-    let fadeFactor = Math.max((distanceToNextSection / window.innerHeight), 0);
+    let fadeFactor = Math.max((distanceToNextSection / nextSectionScrollY), 0);
+    const main = document.getElementsByTagName("main")[0];
 
-    const endColor = { r: 0, g: 0, b: 0 };
-    const startColor = { r: 121, g: 35, b: 9 };
-
-    const interpolatedColor = {
-      r: Math.round(startColor.r + fadeFactor * (endColor.r - startColor.r)),
-      g: Math.round(startColor.g + fadeFactor * (endColor.g - startColor.g)),
-      b: Math.round(startColor.b + fadeFactor * (endColor.b - startColor.b)),
-    };
-
-    app.style.backgroundColor = `rgb(${interpolatedColor.r}, ${interpolatedColor.g}, ${interpolatedColor.b})`;
+    main.style.backgroundImage = `linear-gradient(rgba(0, 14, 40, ${Math.min(1-fadeFactor, 0.5)}),rgba(0, 14, 40, ${Math.min(1-fadeFactor, 0.5)})), url(${background})`;
   };

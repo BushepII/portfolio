@@ -42,6 +42,7 @@
     img {
         height: 15vh;
         width: auto;
+        background-color: white;
     }
     
     img:hover{

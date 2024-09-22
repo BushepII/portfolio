@@ -1,7 +1,15 @@
 <script>
+import { scrollToSection } from './functions';
+
     export default {
         name: 'Header',
-        props: ['headers', 'active', 'scrollToTop', 'scrollToSection', 'currentSection'],
+        props: {
+            headers: Array,
+            scrollToTop: Function,
+            scrollToSection: Function,
+            active: Boolean,
+            currentSection: String,
+        },
     };
 </script>
 

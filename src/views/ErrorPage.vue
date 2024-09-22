@@ -20,13 +20,7 @@
 
 
 <style scoped>
-
-  Header {
-    background-color: rgb(121, 35, 9);
-  }
-
   main {
-    background-color: rgb(121, 35, 9);
     color: white;
     padding-top: 5%;
   }
@@ -38,6 +32,7 @@
 
   h1 {
     font-size: 10em;
+    text-align: start;
   }
 
   .router{

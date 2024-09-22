@@ -1,7 +1,7 @@
 <script>
     export default {
         name: 'Modale',
-        props: ['revele', 'toggleModale', 'imageSrc', 'imageDescription'],
+        props: ['revele', 'toggleModale', 'imageSrc', 'videoSrc', 'videoType', 'imageDescription'],
     };
 </script>
 
@@ -10,13 +10,14 @@
         <div class="bloc-modale" v-if="revele">
             <div class="overlay" v-on:click="toggleModale"></div>
 
-            <div class="modale card">
+            <div class="modale">
                 <button v-on:click="toggleModale" class="btn-modale">X</button>
                 <div class="modale-content">
                     <section class="modal-text">
                         <slot></slot>
                     </section>
-                    <img :src="imageSrc" class="modal-image">
+                    <video v-if="videoSrc" :src="videoSrc" :type="videoType" class="modal-video" autoplay loop muted playinline></video>
+                    <img v-else-if="imageSrc" :src="imageSrc" class="modal-image">
                 </div>
 
             </div>
@@ -44,7 +45,7 @@
 
     .bloc-modale {
         position: fixed;
-        top: 0;
+        top: 5%;
         bottom: 0;
         left: 0;
         right: 0;
@@ -53,6 +54,8 @@
         display: flex;
         flex-direction: column;
         justify-content: center;
+        align-items: center;
+        z-index: 5;
     }
 
     .modal-text {
@@ -66,8 +69,14 @@
     .modal-image {
         width: auto;
         height: 100%;
+        padding-left: 10em;
+        padding-right: 4em;
+    }
+
+    .modal-video {
+        width: auto;
+        height: 100%;
         padding-left: 4em;
-        padding-top: 4em;
         padding-right: 4em;
     }
 
@@ -85,7 +94,6 @@
         color: #333;
         padding: 2em;
         position: fixed;
-        top: 10%;
         width: 80%;
         height: 80%;
         display: flex;
